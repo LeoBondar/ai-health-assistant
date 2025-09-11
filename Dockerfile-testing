@@ -1,0 +1,6 @@
+ARG IMAGE_NAME
+FROM ${IMAGE_NAME}
+
+RUN apt-get update && apt-get upgrade -y
+
+RUN poetry add isort pytest pytest-cov diff-cover coverage

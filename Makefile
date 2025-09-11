@@ -14,28 +14,31 @@ set-container:
 	$(eval $(call set-default-container))
 
 build: set-container
-	docker-compose build ${c}
+	docker compose build ${c}
 
 dev:
-	docker-compose up -d --force-recreate ${c}
+	docker compose up -d --force-recreate ${c}
 
 restart: set-container
-	docker-compose restart ${c}
+	docker compose restart ${c}
 
 down:
-	docker-compose down
+	docker compose down
 
 exec: set-container
-	docker-compose exec ${c} /bin/bash
+	docker compose exec ${c} /bin/bash
 
 log: set-container
-	docker-compose logs -f ${c}
+	docker compose logs -f ${c}
 
 local_run:
 	HOT_RELOAD=true python3 backend.py
 
 format:  ## Autoformat code
-	black .
+	flake8 . tests
+	mypy app
+	safety check
+	bandit -r app
 
 lint:
 	ruff check . tests

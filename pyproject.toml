@@ -1,0 +1,123 @@
+[tool.poetry]
+name = "ai health assistant"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10.10"
+
+# Web
+fastapi = "^0.110.0"
+uvicorn = "^0.27.1"
+httpx = "^0.27.0"
+
+# DB
+asyncpg = "^0.27.0"
+sqlalchemy = "^2.0.4"
+
+# Logging
+loguru = "^0.6.0"
+
+
+dependency-injector = "^4.41.0"
+sentry-sdk = "^2.11.0"
+uuid = "^1.30"
+starlette-exporter = "^0.23.0"
+orjson = "^3.10.6"
+python-dotenv = "^1.0.1"
+pydantic-settings = "^2.3.4"
+python-multipart = "^0.0.9"
+
+openai = "^1.37.1"
+beautifulsoup4 = "^4.12.3"
+fastapi-limiter = "^0.1.6"
+aioredis = "^2.0.1"
+pypdf2 = "^3.0.1"
+pandas = "^2.2.3"
+python-docx = "^1.1.2"
+python-magic = "^0.4.27"
+pydub = "^0.25.1"
+mutagen = "^1.47.0"
+yt-dlp = "^2025.2.19"
+pyav = "^14.2.1"
+m3u8 = "^6.0.0"
+openpyxl = "^3.1.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+# Tests
+coverage = "^7.2.5"
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+diff-cover = "^6.5.1"
+pytest-asyncio = "^0.21.1"
+respx = "^0.20.2"
+pytest-sugar = "^1.0.0"
+asgi-lifespan = "^2.1.0"
+
+# Linters
+mypy = "^1.0.1"
+bandit = "^1.7.4"
+isort = "^5.12.0"
+
+# Formatter
+black = "^22.6.0"
+safety = "^2.3.5"
+
+
+[tool.black]
+line-length = 120
+target-version = ['py310']
+include = '\.pyi?$'
+skip-string-normalization = true
+exclude = '''
+^/(
+  (
+     \.git
+    | \.pytest_cache
+    | \.run
+    | logs
+    | docs
+    | tests/integration
+  )/
+)
+'''
+
+[tool.isort]
+line_length = 120
+force_grid_wrap = 0
+multi_line_output = 3
+use_parentheses = true
+include_trailing_comma = true
+known_first_party = "svc"
+default_section = "THIRDPARTY"
+lines_after_imports = -1
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+follow_imports = "silent"
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+check_untyped_defs = true
+no_implicit_reexport = true
+disallow_untyped_defs = true
+disallow_any_generics = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_incomplete_defs = false
+disallow_untyped_defs = false
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
