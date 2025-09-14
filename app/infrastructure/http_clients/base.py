@@ -44,7 +44,5 @@ class BaseHttpClient:
         try:
             response.raise_for_status()
         except HTTPStatusError as e:
-            raise HTTPClientStatusException(
-                status_code=response.status_code, body=response.json()
-            ) from e
+            raise HTTPClientStatusException(status_code=response.status_code, body=response.json()) from e
         return response

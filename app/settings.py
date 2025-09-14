@@ -61,4 +61,5 @@ class Settings(BaseSettings):
     database: DatabaseSettings = DatabaseSettings()
     openai: OpenAISettings = OpenAISettings()
 
+
 settings = Settings()

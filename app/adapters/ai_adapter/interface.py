@@ -1,9 +1,6 @@
 from typing import Protocol
 
-from app.adapters.ai_adapter.schemas import (
-    AIAGenTextCommand,
-    AIAGenAnswerResult
-)
+from app.adapters.ai_adapter.schemas import AIAGenAnswerResult, AIAGenTextCommand
 
 
 class IAIAdapter(Protocol):

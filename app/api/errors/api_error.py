@@ -8,6 +8,7 @@ class ErrorCode(IntEnum):
     ACCESS_DENIED = 1000
     VALIDATION_ERROR = 2000
     INTERNAL_SERVER_ERROR = 5000
+    MESSAGE_NOT_FOUND = 3000
 
 
 class ApiError(BaseAppException):
@@ -31,3 +32,9 @@ class ApiError(BaseAppException):
 
 class BusinessApiError(ApiError):
     pass
+
+
+class ChatNotFoundApiError(ApiError):
+    status_code = 404
+    error_code = ErrorCode.MESSAGE_NOT_FOUND
+    message = "Chat not found"

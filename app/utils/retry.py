@@ -1,5 +1,6 @@
-from functools import wraps
 import asyncio
+from functools import wraps
+
 from loguru import logger
 
 
@@ -7,7 +8,7 @@ def retry_async(
     max_attempts: int = 3,
     delay: float = 1,
     exceptions: tuple[Exception] = (Exception,),
-):
+) -> function:
     def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
@@ -21,7 +22,7 @@ def retry_async(
 
                     logger.warning(f"Attempt {attempt}/{max_attempts} failed: {str(e)}")
 
-                    await asyncio.sleep(delay * attempt)  # Экспоненциальная задержка
+                    await asyncio.sleep(delay * attempt)
             raise RuntimeError("Should never reach this line")
 
         return wrapper

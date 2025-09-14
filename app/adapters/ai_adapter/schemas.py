@@ -2,11 +2,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
-from app.dto.message import MessageType
-
-
-class BaseGenCommand(BaseModel):
-    chat_model_name: str
+from app.enums.chats import MessageType
 
 
 class AIAMessageModel(BaseModel):
@@ -16,9 +12,8 @@ class AIAMessageModel(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
 
-class AIAGenTextCommand(BaseGenCommand):
+class AIAGenTextCommand(BaseModel):
     messages: list[AIAMessageModel]
-    preset: str | None = None
     use_context: bool
 
 
@@ -26,11 +21,3 @@ class AIAGenAnswerResult(BaseModel):
     answer: str
     completion_tokens: int = 0
     prompt_tokens: int = 0
-
-
-class AIAGetSpeachToTextCommand(BaseGenCommand):
-    file: bytes
-
-
-class AIAGetSpeachToTextResult(BaseModel):
-    text: str

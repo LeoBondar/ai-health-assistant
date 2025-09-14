@@ -4,6 +4,8 @@ from typing import AsyncGenerator, Protocol
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.infrastructure.db import Database, SessionContext
+from app.repositories.chat import ChatRepository, IChatRepository
+from app.repositories.message import IMessageRepository, MessageRepository
 
 
 class IUnitOfWork(Protocol):
@@ -48,3 +50,11 @@ class UnitOfWork(IUnitOfWork):
 
     async def rollback(self) -> None:
         await self.session.rollback()
+
+    @property
+    def chat_repository(self) -> IChatRepository:
+        return ChatRepository(self.session)
+
+    @property
+    def message_repository(self) -> IMessageRepository:
+        return MessageRepository(self.session)

@@ -7,9 +7,7 @@ from openai.types.chat import ChatCompletion
 
 from app.infrastructure.http_clients.base import BaseHttpClient
 from app.infrastructure.http_clients.enums import HTTPClientRequestMethod
-from app.infrastructure.http_clients.openai.schemas import (
-    OACGenTextCommand,
-)
+from app.infrastructure.http_clients.openai.schemas import OACGenTextCommand
 from app.settings import settings
 
 
@@ -18,9 +16,15 @@ class IOpenAIClient(Protocol):
     async def gen_text(self, command: OACGenTextCommand) -> ChatCompletion:
         raise NotImplementedError
 
+
 class OpenAIClient(BaseHttpClient, IOpenAIClient):
     async def gen_text(self, command: OACGenTextCommand) -> ChatCompletion:
-        pass
+        response = await self._make_request(
+            url="/v1/chat/completions",
+            method=HTTPClientRequestMethod.POST,
+            json={"model": "gpt-4o-mini", "messages": command.messages},
+        )
+        return ChatCompletion(**response.json())
 
     async def _make_request(
         self,

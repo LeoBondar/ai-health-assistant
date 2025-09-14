@@ -4,32 +4,4 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <include file="sql/init.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_rate_and_special_offer.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_rate_status.sql" relativeToChangelogFile="true"/>
-    <include file="sql/update_message_type_and_add_chat_name.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_message_and_chat_status.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_payment.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_chat_preset.sql" relativeToChangelogFile="true"/>
-    <include file="sql/rename_columns.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_model_table.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_promocode_table.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_chat_service_table.sql" relativeToChangelogFile="true"/>
-    <include file="sql/remove_payments_columns.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_payments_column_days.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_proxy_column.sql" relativeToChangelogFile="true"/>
-    <include file="sql/drop_subscription_column.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_assistant_table.sql" relativeToChangelogFile="true"/>
-    <include file="sql/rename_promo_codes_table.sql" relativeToChangelogFile="true"/>
-    <include file="sql/update_chat_table.sql" relativeToChangelogFile="true"/>
-    <include file="sql/remove_service_columns.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_relative_links_table.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_assistant_description.sql" relativeToChangelogFile="true"/>
-    <include file="sql/remove_chat_limit_column.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_special_offer_id_column.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_file_message.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_rank_and_frozen_column.sql" relativeToChangelogFile="true"/>
-    <include file="sql/merge_promo_code_and_special_offer.sql" relativeToChangelogFile="true"/>
-    <include file="sql/drop_rate_id_column.sql" relativeToChangelogFile="true"/>
-    <include file="sql/update_link_url_column.sql" relativeToChangelogFile="true"/>
-    <include file="sql/add_transcription_limit_column.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
