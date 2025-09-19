@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends, Form, Path, Query
+from fastapi import APIRouter, Depends, Form, Path, Query, Body
 
 from app.api.chats.schemas import AddChatCommand, AddChatMessageResponse, AddChatResponse, GetChatsResponse
 from app.api.errors.api_error import ErrorCode
@@ -39,9 +39,9 @@ async def get_chats(
 @router.post("/{chatId}/message", description="Добавить сообщение в чат", status_code=201)
 @inject
 async def add_chat_message(
-    text: str = Form(description="Текст сообщения", alias="text"),
+    text: str = Body(description="Текст сообщения", alias="text"),
     chat_id: UUID = Path(description="Идентификатор чата", alias="chatId"),
-    user_id: str = Query(description="Идентификатор пользователя", alias="userId"),
+    user_id: str = Body(description="Идентификатор пользователя", alias="userId"),
     use_case: AddChatMessageUseCase = Depends(Provide[WebAppContainer.chat_add_message_use_case]),
 ) -> ApiResponse[AddChatMessageResponse]:
     result = await use_case(text=text, user_id=user_id, chat_id=chat_id)
