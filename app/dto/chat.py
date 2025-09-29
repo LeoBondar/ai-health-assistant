@@ -1,3 +1,4 @@
+from uuid import UUID
 from dataclasses import dataclass
 
 from app.enums.chats import MessageType
@@ -20,3 +21,8 @@ class AddMessageDTO:
 class CreateMessageDTO:
     text: str
     type: MessageType
+
+
+@dataclass
+class CreatePlanDTO:
+    chat_id: UUID

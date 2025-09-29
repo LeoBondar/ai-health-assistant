@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Any
 from uuid import UUID, uuid4
 
-from app.dto.chat import AddMessageDTO, CreateChatDTO, CreateMessageDTO
+from app.dto.chat import AddMessageDTO, CreateChatDTO, CreateMessageDTO, CreatePlanDTO
 from app.enums.chats import MessageType
 from app.utils.datetime import get_now_w_tz
 
@@ -35,6 +35,8 @@ class Chat:
     user_id: str
     name: str
     use_context: bool = True
+    plan_id: UUID | None = None
+    messages: list[Message] = field(default_factory=list)
 
     @classmethod
     def create(cls, dto: CreateChatDTO) -> "Chat":
@@ -42,3 +44,80 @@ class Chat:
 
     def add_message(self, dto: AddMessageDTO) -> None:
         self.messages.append(Message.create(CreateMessageDTO(text=dto.text, type=dto.type)))
+
+
+@dataclass
+class RiskFactor:
+    id: UUID
+    factor: str
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, self.__class__):
+            return False
+        return other.id == self.id
+
+
+@dataclass
+class Disease:
+    id: UUID
+    name: str
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, self.__class__):
+            return False
+        return other.id == self.id
+
+
+@dataclass
+class UserGoal:
+    id: UUID
+    name: str
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, self.__class__):
+            return False
+        return other.id == self.id
+
+
+@dataclass
+class Place:
+    id: UUID
+    name: str
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, self.__class__):
+            return False
+        return other.id == self.id
+
+
+@dataclass
+class Exercise:
+    id: UUID
+    name: str
+    type: str
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, self.__class__):
+            return False
+        return other.id == self.id
+
+
+@dataclass
+class Plan:
+    id: UUID
+    chat_id: UUID
+    risk_factor: RiskFactor | None = None
+    disease: Disease | None = None
+    user_goal: UserGoal | None = None
+    place: Place | None = None
+    exercise: Exercise | None = None
+    description: str | None = None
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, self.__class__):
+            return False
+        return other.id == self.id
+    
+    @classmethod
+    def create(cls, dto: CreatePlanDTO) -> "Plan":
+        return cls(id=uuid4(), chat_id=dto.chat_id)
