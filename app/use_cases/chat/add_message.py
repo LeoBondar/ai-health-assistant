@@ -23,7 +23,7 @@ class AddChatMessageUseCase:
     async def __call__(
         self,
         text: str,
-        user_id: UUID,
+        user_id: str,
         chat_id: UUID,
     ) -> AddChatMessageResponse:
         async with self._uow.begin():

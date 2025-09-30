@@ -5,7 +5,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.infrastructure.db import Database, SessionContext
 from app.repositories.chat import ChatRepository, IChatRepository
+from app.repositories.disease import DiseaseRepository, IDiseaseRepository
+from app.repositories.exercise import ExerciseRepository, IExerciseRepository
+from app.repositories.factor import IRiskFactorRepository, RiskFactorRepository
 from app.repositories.message import IMessageRepository, MessageRepository
+from app.repositories.place import IPlaceRepository, PlaceRepository
+from app.repositories.plan import IPlanRepository, PlanRepository
+from app.repositories.user_goal import IUserGoalRepository, UserGoalRepository
 
 
 class IUnitOfWork(Protocol):
@@ -58,3 +64,27 @@ class UnitOfWork(IUnitOfWork):
     @property
     def message_repository(self) -> IMessageRepository:
         return MessageRepository(self.session)
+
+    @property
+    def place_repository(self) -> IPlaceRepository:
+        return PlaceRepository(self.session)
+
+    @property
+    def disease_repository(self) -> IDiseaseRepository:
+        return DiseaseRepository(self.session)
+
+    @property
+    def exercise_repository(self) -> IExerciseRepository:
+        return ExerciseRepository(self.session)
+
+    @property
+    def plan_repository(self) -> IPlanRepository:
+        return PlanRepository(self.session)
+
+    @property
+    def user_goal_repository(self) -> IUserGoalRepository:
+        return UserGoalRepository(self.session)
+
+    @property
+    def risk_factor_repository(self) -> IRiskFactorRepository:
+        return RiskFactorRepository(self.session)

@@ -11,7 +11,7 @@ class GetChatsView:
     def __init__(self, uow: UnitOfWork) -> None:
         self._uow = uow
 
-    async def __call__(self, limit: int, offset: int, user_id: UUID) -> GetChatsResponse:
+    async def __call__(self, limit: int, offset: int, user_id: str) -> GetChatsResponse:
         async with self._uow.begin():
             stmt = (
                 select(
@@ -19,6 +19,7 @@ class GetChatsView:
                     chat_table.c.name,
                     chat_table.c.user_id,
                     chat_table.c.use_context,
+                    chat_table.c.plan_id,
                 )
                 .where(
                     chat_table.c.user_id == user_id,
@@ -35,6 +36,7 @@ class GetChatsView:
                         id=chat.id,
                         name=chat.name,
                         use_context=chat.use_context,
+                        plan_id=chat.plan_id,
                     )
                     for chat in chats
                 ]

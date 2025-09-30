@@ -1,21 +1,88 @@
 from sqlalchemy.orm import relationship
 
-from app.domain.chat import Chat, Message
+from app.domain.chat import Chat, Disease, Exercise, Message, Place, Plan, RiskFactor, UserGoal
 from app.persistent.db_schemas.base import mapper_registry
-
-from .chat import chat_table, message_table
+from app.persistent.db_schemas.chat import (
+    chat_table,
+    disease_table,
+    exercise_table,
+    message_table,
+    place_table,
+    plan_table,
+    risk_factor_table,
+    user_goal_table,
+)
 
 
 def init_mappers() -> None:
-    message_mapper = mapper_registry.map_imperatively(Message, message_table)
-    chat_mapper = mapper_registry.map_imperatively(
+    mapper_registry.map_imperatively(
         Chat,
         chat_table,
         properties={
             "messages": relationship(
-                message_mapper,
-                foreign_keys=message_mapper.c.chat_id,
-                lazy="selectin",
+                "Message",
+                back_populates="chat",
+                cascade="all, delete-orphan",
             ),
+            "plan": relationship(
+                "Plan",
+                uselist=False,
+                back_populates="chat",
+                cascade="all, delete-orphan",
+            ),
+        },
+    )
+
+    mapper_registry.map_imperatively(
+        Message,
+        message_table,
+        properties={
+            "chat": relationship(
+                "Chat",
+                back_populates="messages",
+            ),
+        },
+    )
+
+    mapper_registry.map_imperatively(
+        RiskFactor,
+        risk_factor_table,
+    )
+
+    mapper_registry.map_imperatively(
+        Disease,
+        disease_table,
+    )
+
+    mapper_registry.map_imperatively(
+        UserGoal,
+        user_goal_table,
+    )
+
+    mapper_registry.map_imperatively(
+        Place,
+        place_table,
+    )
+
+    mapper_registry.map_imperatively(
+        Exercise,
+        exercise_table,
+    )
+
+    mapper_registry.map_imperatively(
+        Plan,
+        plan_table,
+        properties={
+            "chat": relationship(
+                "Chat",
+                foreign_keys=[plan_table.c.chat_id],
+                uselist=False,
+                back_populates="plan",
+            ),
+            "risk_factor": relationship("RiskFactor", foreign_keys=[plan_table.c.risk_factor_id], uselist=False),
+            "disease": relationship("Disease", foreign_keys=[plan_table.c.disease_id], uselist=False),
+            "user_goal": relationship("UserGoal", foreign_keys=[plan_table.c.user_goal_id], uselist=False),
+            "place": relationship("Place", foreign_keys=[plan_table.c.place_id], uselist=False),
+            "exercise": relationship("Exercise", foreign_keys=[plan_table.c.exercise_id], uselist=False),
         },
     )

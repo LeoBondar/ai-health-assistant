@@ -1,6 +1,6 @@
 from app.api.chats.schemas import AddChatCommand, AddChatResponse
-from app.domain.chat import Chat
-from app.dto.chat import CreateChatDTO
+from app.domain.chat import Chat, Plan
+from app.dto.chat import CreateChatDTO, CreatePlanDTO
 from app.repositories.uow import UnitOfWork
 
 
@@ -17,7 +17,6 @@ class AddChatUseCase:
                     use_context=cmd.use_context,
                 )
             )
-
             await self._uow.chat_repository.save(chat)
 
         return AddChatResponse(id=chat.id)
