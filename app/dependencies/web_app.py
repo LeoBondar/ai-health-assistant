@@ -13,9 +13,13 @@ from app.use_cases.chat.add_plan_exercise import AddPlanExerciseUseCase
 from app.use_cases.chat.add_plan_factor import AddPlanFactorUseCase
 from app.use_cases.chat.add_plan_goal import AddPlanGoalUseCase
 from app.use_cases.chat.add_plan_place import AddPlanPlaceUseCase
+from app.use_cases.chat.generate_plan import GeneratePlanUseCase
 from app.views.chats.get_chats import GetChatsView
+from app.views.chats.get_exercises import GetExercisesView
 from app.views.chats.get_factors import GetFactorsView
 from app.views.chats.get_places import GetPlacesView
+from app.views.chats.get_plan_info import GetPlanInfoView
+from app.views.chats.get_user_goals import GetUserGoalsView
 
 
 class WebAppContainer(containers.DeclarativeContainer):
@@ -51,8 +55,12 @@ class WebAppContainer(containers.DeclarativeContainer):
     chat_add_plan_exercise_use_case = providers.Factory(AddPlanExerciseUseCase, uow=unit_of_work)
     chat_add_plan_goal_use_case = providers.Factory(AddPlanGoalUseCase, uow=unit_of_work)
     chat_add_plan_disease_use_case = providers.Factory(AddPlanDiseaseUseCase, uow=unit_of_work)
+    chat_generate_plan_use_case = providers.Factory(GeneratePlanUseCase, uow=unit_of_work, ai_manager=ai_manager)
 
     # Views
     chat_get_chats_view = providers.Factory(GetChatsView, uow=unit_of_work)
+    chat_get_exercises_view = providers.Factory(GetExercisesView, uow=unit_of_work)
     chat_get_factors_view = providers.Factory(GetFactorsView, uow=unit_of_work)
     chat_get_places_view = providers.Factory(GetPlacesView, uow=unit_of_work)
+    chat_get_plan_info_view = providers.Factory(GetPlanInfoView, uow=unit_of_work)
+    chat_get_user_goals_view = providers.Factory(GetUserGoalsView, uow=unit_of_work)

@@ -1,6 +1,6 @@
 from app.adapters.ai_adapter.base import BaseAIAdapter
 from app.adapters.ai_adapter.interface import IAIAdapter
-from app.adapters.ai_adapter.schemas import AIAGenAnswerResult, AIAGenTextCommand
+from app.adapters.ai_adapter.schemas import AIAGenAnswerResult, AIAGenTextCommand, AIAGenPlanResponse, AIAGenPlanCommand
 from app.infrastructure.http_clients.openai.client import IOpenAIClient
 from app.infrastructure.http_clients.openai.schemas import OACGenTextCommand
 
@@ -69,4 +69,31 @@ class OpenAIAdapter(IAIAdapter, BaseAIAdapter):
             answer=response.choices[0].message.content,
             prompt_tokens=response.usage.prompt_tokens,
             completion_tokens=response.usage.completion_tokens,
+        )
+
+
+    async def gen_plan(self, command: AIAGenPlanCommand) -> AIAGenPlanResponse:
+        messages = [
+            {
+                "role": "system",
+                "content": f"""Мои знания актуальны на сентябрь 2025 года.
+                        Я принимаю роль специалиста исходя из запроса.
+                        Отвечаю на том языке, на котором ко мне обратились.
+                        Если я не располагаю знаниями я прогнозирую и импровизирую, но не допускаю ответов о незнании.
+                        Я получаю на вход следующую информацию о человеке:
+                        1) Фактор риска: {command.risk_factor}
+                        2) Заболевание: {command.disease}
+                        3) Цель: {command.user_goal}
+                        4) Место: {command.place}
+                        5) Упражнение: {command.exercise}
+                        
+                        Исходя из этого я должен сформировать план работы на будущее время. Должен расписать когда, сколько и с какой интенсивностью работать человеку для достиженния его целей.
+                        Вся информация выводится в формате для telegram (так что делай соотвествующую разметку)
+                        """,
+            }
+        ]
+        response = await self._client.gen_text(command=OACGenTextCommand(messages=messages))
+
+        return AIAGenPlanResponse(
+            description=response.choices[0].message.content,
         )

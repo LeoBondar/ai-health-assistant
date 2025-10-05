@@ -17,9 +17,14 @@ from app.api.chats.schemas import (
     AddPlanGoalResponse,
     AddPlanPlaceCommand,
     AddPlanPlaceResponse,
+    GeneratePlanCommand,
+    GeneratePlanResponse,
     GetChatsResponse,
+    GetExercisesResponse,
     GetPlacesResponse,
+    GetPlanInfoResponse,
     GetRiskFactorsResponse,
+    GetUserGoalsResponse,
 )
 from app.api.errors.api_error import ErrorCode
 from app.api.models.base import ApiResponse
@@ -31,9 +36,13 @@ from app.use_cases.chat.add_plan_exercise import AddPlanExerciseUseCase
 from app.use_cases.chat.add_plan_factor import AddPlanFactorUseCase
 from app.use_cases.chat.add_plan_goal import AddPlanGoalUseCase
 from app.use_cases.chat.add_plan_place import AddPlanPlaceUseCase
+from app.use_cases.chat.generate_plan import GeneratePlanUseCase
 from app.views.chats.get_chats import GetChatsView
+from app.views.chats.get_exercises import GetExercisesView
 from app.views.chats.get_factors import GetFactorsView
 from app.views.chats.get_places import GetPlacesView
+from app.views.chats.get_plan_info import GetPlanInfoView
+from app.views.chats.get_user_goals import GetUserGoalsView
 
 router = APIRouter(prefix="/chats", tags=["chats"])
 
@@ -94,6 +103,28 @@ async def get_places(
     return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
 
 
+@router.get("/exercises", description="Получить упражнения")
+@inject
+async def get_exercises(
+    limit: int = Query(10, description="Лимит"),
+    offset: int = Query(0, description="Оффсет"),
+    view: GetExercisesView = Depends(Provide[WebAppContainer.chat_get_exercises_view]),
+) -> ApiResponse[GetExercisesResponse]:
+    result = await view(limit=limit, offset=offset)
+    return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
+
+
+@router.get("/goals", description="Получить цели пользователя")
+@inject
+async def get_user_goals(
+    limit: int = Query(10, description="Лимит"),
+    offset: int = Query(0, description="Оффсет"),
+    view: GetUserGoalsView = Depends(Provide[WebAppContainer.chat_get_user_goals_view]),
+) -> ApiResponse[GetUserGoalsResponse]:
+    result = await view(limit=limit, offset=offset)
+    return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
+
+
 @router.post("/plans/riskFactor", description="Добавить фактор риска к плану", status_code=201)
 @inject
 async def add_plan_factor(
@@ -141,4 +172,24 @@ async def add_plan_disease(
     use_case: AddPlanDiseaseUseCase = Depends(Provide[WebAppContainer.chat_add_plan_disease_use_case]),
 ) -> ApiResponse[AddPlanDiseaseResponse]:
     result = await use_case(cmd=cmd)
+    return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
+
+
+@router.get("/plans/{planId}", description="Получить информацию о плане")
+@inject
+async def get_plan_info(
+    plan_id: UUID = Path(description="Идентификатор плана", alias="planId"),
+    view: GetPlanInfoView = Depends(Provide[WebAppContainer.chat_get_plan_info_view]),
+) -> ApiResponse[GetPlanInfoResponse]:
+    result = await view(plan_id=plan_id)
+    return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
+
+
+@router.post("/plans/{planId}/generate", description="Сгенерировать описание плана", status_code=201)
+@inject
+async def generate_plan(
+    plan_id: UUID = Path(description="Идентификатор плана", alias="planId"),
+    use_case: GeneratePlanUseCase = Depends(Provide[WebAppContainer.chat_generate_plan_use_case]),
+) -> ApiResponse[GeneratePlanResponse]:
+    result = await use_case(cmd=GeneratePlanCommand(plan_id=plan_id))
     return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")

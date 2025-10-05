@@ -15,6 +15,18 @@ class AIAMessageModel(BaseModel):
 class AIAGenTextCommand(BaseModel):
     messages: list[AIAMessageModel]
     use_context: bool
+    
+
+class AIAGenPlanCommand(BaseModel):
+    risk_factor: str
+    disease: str
+    user_goal: str
+    place: str
+    exercise: str
+
+
+class AIAGenPlanResponse(BaseModel):
+    description: str
 
 
 class AIAGenAnswerResult(BaseModel):

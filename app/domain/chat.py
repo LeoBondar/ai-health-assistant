@@ -123,6 +123,7 @@ class Exercise:
 @dataclass
 class Plan:
     id: UUID
+    chat_id: UUID
     risk_factor: RiskFactor | None = None
     disease: Disease | None = None
     user_goal: UserGoal | None = None

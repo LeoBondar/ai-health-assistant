@@ -29,8 +29,7 @@ class GetChatsResponse(ApiCamelModel):
 
 class RiskFactorData(ApiCamelModel):
     id: UUID = Field(description="Идентификатор фактора риска")
-    name: str = Field(description="Название фактора риска")
-
+    factor: str = Field(description="Название фактора риска")
 
 class GetRiskFactorsResponse(ApiCamelModel):
     factors: list[RiskFactorData] = Field(description="Факторы риска")
@@ -38,11 +37,6 @@ class GetRiskFactorsResponse(ApiCamelModel):
 
 class AddChatMessageResponse(ApiCamelModel):
     text: str = Field(description="Текст сообщения")
-
-
-class RiskFactorData(ApiCamelModel):
-    id: UUID = Field(description="Идентификатор фактора риска")
-    factor: str = Field(description="Название фактора риска")
 
 
 class DiseaseData(ApiCamelModel):
@@ -68,6 +62,14 @@ class ExerciseData(ApiCamelModel):
     id: UUID = Field(description="Идентификатор упражнения")
     name: str = Field(description="Название упражнения")
     type: str = Field(description="Тип упражнения")
+
+
+class GetExercisesResponse(ApiCamelModel):
+    exercises: list[ExerciseData] = Field(description="Упражнения")
+
+
+class GetUserGoalsResponse(ApiCamelModel):
+    goals: list[UserGoalData] = Field(description="Цели пользователя")
 
 
 class GetPlanInfoResponse(ApiCamelModel):
@@ -123,3 +125,11 @@ class AddPlanDiseaseCommand(ApiCamelModel):
 
 class AddPlanDiseaseResponse(ApiCamelModel):
     ...
+
+
+class GeneratePlanCommand(ApiCamelModel):
+    plan_id: UUID = Field(description="Идентификатор плана")
+
+
+class GeneratePlanResponse(ApiCamelModel):
+    description: str = Field(description="Сгенерированное описание плана")
