@@ -88,7 +88,17 @@ class OpenAIAdapter(IAIAdapter, BaseAIAdapter):
                         5) Exercise: {command.exercise}
                         
                         Based on this, I must create a future work plan. I should specify when, how much, and with what intensity a person should work to achieve their goals.
-                        All information is output in Telegram format (so use appropriate markup)
+                        
+                        IMPORTANT: Use only Telegram-supported formatting:
+                        - Use *bold text* for emphasis (single asterisks)
+                        - Use _italic text_ for secondary emphasis (single underscores)
+                        - Use `code` for specific terms or values (single backticks)
+                        - Use simple bullet points with • or -
+                        - Do NOT use ** (double asterisks), __ (double underscores), or ### headers
+                        - Do NOT use complex markdown like tables, code blocks with ```
+                        - Keep formatting simple and Telegram-compatible
+                        
+                        Structure the plan clearly with simple formatting that Telegram can display properly.
                         """,
             }
         ]
