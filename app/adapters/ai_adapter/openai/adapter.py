@@ -89,16 +89,23 @@ class OpenAIAdapter(IAIAdapter, BaseAIAdapter):
                         
                         Based on this, I must create a future work plan. I should specify when, how much, and with what intensity a person should work to achieve their goals.
                         
-                        IMPORTANT: Use only Telegram-supported formatting:
-                        - Use *bold text* for emphasis (single asterisks)
-                        - Use _italic text_ for secondary emphasis (single underscores)
-                        - Use `code` for specific terms or values (single backticks)
-                        - Use simple bullet points with • or -
-                        - Do NOT use ** (double asterisks), __ (double underscores), or ### headers
-                        - Do NOT use complex markdown like tables, code blocks with ```
-                        - Keep formatting simple and Telegram-compatible
+                        IMPORTANT: Use ONLY HTML formatting supported by Telegram:
+                        - Use <b>bold text</b> for emphasis and headings
+                        - Use <i>italic text</i> for secondary emphasis
+                        - Use <code>code</code> for specific terms, values, or highlights
+                        - Use <u>underlined text</u> for special emphasis if needed
+                        - Use simple bullet points with • or - without any tags
+                        - Do NOT use any Markdown syntax (* _ ` ** __ ### etc.)
+                        - Do NOT use complex HTML tags like <div>, <span>, <table> etc.
+                        - Keep formatting simple and clean for Telegram HTML mode
                         
-                        Structure the plan clearly with simple formatting that Telegram can display properly.
+                        Example format:
+                        <b>План тренировок:</b>
+                        
+                        • <b>Неделя 1-2:</b> <code>3 раза в неделю</code> по <code>30 минут</code>
+                        • <i>Интенсивность:</i> низкая-средняя
+                        
+                        Structure the plan clearly with HTML formatting that Telegram can display properly.
                         """,
             }
         ]
