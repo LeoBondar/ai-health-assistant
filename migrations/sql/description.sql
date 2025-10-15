@@ -1,0 +1,2 @@
+ALTER TABLE IF EXISTS chats.exercise
+    ADD COLUMN IF NOT EXISTS description TEXT NOT NULL;

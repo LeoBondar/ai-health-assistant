@@ -1,6 +1,13 @@
 from app.adapters.ai_adapter.base import BaseAIAdapter
 from app.adapters.ai_adapter.interface import IAIAdapter
-from app.adapters.ai_adapter.schemas import AIAGenAnswerResult, AIAGenTextCommand, AIAGenPlanResponse, AIAGenPlanCommand
+from app.adapters.ai_adapter.schemas import (
+    AIAGenAnswerResult,
+    AIAGenTextCommand, 
+    AIAGenPlanResponse, 
+    AIAGenPlanCommand,
+    AIAUpdatePlanCommand,
+    AIAUpdatePlanResponse,
+)
 from app.infrastructure.http_clients.openai.client import IOpenAIClient
 from app.infrastructure.http_clients.openai.schemas import OACGenTextCommand
 
@@ -112,5 +119,45 @@ class OpenAIAdapter(IAIAdapter, BaseAIAdapter):
         response = await self._client.gen_text(command=OACGenTextCommand(messages=messages))
 
         return AIAGenPlanResponse(
+            description=response.choices[0].message.content,
+        )
+    
+    async def update_plan(self, command: AIAUpdatePlanCommand) -> AIAUpdatePlanResponse:
+        messages = [
+            {
+                "role": "system",
+                "content": f"""My knowledge is current as of September 2025.
+                        I take on the role of a specialist based on the request.
+                        I respond in the language I am addressed in.
+                        If I lack knowledge, I predict and improvise, but I do not allow responses about not knowing.
+                        I receive the following information about a person as input:
+                        1) Current plan: {command.plan}
+                        2) Comment: {command.comment}
+                        
+                        Based on this, I must update the plan. I should specify when, how much, and with what intensity a person should work to achieve their goals.
+                        
+                        IMPORTANT: Use ONLY HTML formatting supported by Telegram:
+                        - Use <b>bold text</b> for emphasis and headings
+                        - Use <i>italic text</i> for secondary emphasis
+                        - Use <code>code</code> for specific terms, values, or highlights
+                        - Use <u>underlined text</u> for special emphasis if needed
+                        - Use simple bullet points with • or - without any tags
+                        - Do NOT use any Markdown syntax (* _ ` ** __ ### etc.)
+                        - Do NOT use complex HTML tags like <div>, <span>, <table> etc.
+                        - Keep formatting simple and clean for Telegram HTML mode
+                        
+                        Example format:
+                        <b>План тренировок:</b>
+                        
+                        • <b>Неделя 1-2:</b> <code>3 раза в неделю</code> по <code>30 минут</code>
+                        • <i>Интенсивность:</i> низкая-средняя
+                        
+                        Structure the plan clearly with HTML formatting that Telegram can display properly.
+                        """,
+            }
+        ]
+        response = await self._client.gen_text(command=OACGenTextCommand(messages=messages))
+
+        return AIAUpdatePlanResponse(
             description=response.choices[0].message.content,
         )

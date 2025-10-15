@@ -14,6 +14,8 @@ from app.use_cases.chat.add_plan_factor import AddPlanFactorUseCase
 from app.use_cases.chat.add_plan_goal import AddPlanGoalUseCase
 from app.use_cases.chat.add_plan_place import AddPlanPlaceUseCase
 from app.use_cases.chat.generate_plan import GeneratePlanUseCase
+from app.use_cases.chat.update_plan import UpdatePlanUseCase
+from app.use_cases.chat.delete_chat import DeleteChatUseCase
 from app.views.chats.get_chats import GetChatsView
 from app.views.chats.get_exercises import GetExercisesView
 from app.views.chats.get_factors import GetFactorsView
@@ -56,6 +58,8 @@ class WebAppContainer(containers.DeclarativeContainer):
     chat_add_plan_goal_use_case = providers.Factory(AddPlanGoalUseCase, uow=unit_of_work)
     chat_add_plan_disease_use_case = providers.Factory(AddPlanDiseaseUseCase, uow=unit_of_work)
     chat_generate_plan_use_case = providers.Factory(GeneratePlanUseCase, uow=unit_of_work, ai_manager=ai_manager)
+    chat_update_plan_use_case = providers.Factory(UpdatePlanUseCase, uow=unit_of_work, ai_manager=ai_manager)
+    chat_delete_chat_use_case = providers.Factory(DeleteChatUseCase, uow=unit_of_work)
 
     # Views
     chat_get_chats_view = providers.Factory(GetChatsView, uow=unit_of_work)

@@ -1,4 +1,6 @@
 from uuid import UUID
+from app.use_cases.chat.delete_chat import DeleteChatUseCase
+from uuid import UUID
 
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Body, Depends, Form, Path, Query
@@ -25,6 +27,9 @@ from app.api.chats.schemas import (
     GetPlanInfoResponse,
     GetRiskFactorsResponse,
     GetUserGoalsResponse,
+    UpdatePlanCommand,
+    UpdatePlanResponse,
+    DeleteChatResponse
 )
 from app.api.errors.api_error import ErrorCode
 from app.api.models.base import ApiResponse
@@ -37,6 +42,7 @@ from app.use_cases.chat.add_plan_factor import AddPlanFactorUseCase
 from app.use_cases.chat.add_plan_goal import AddPlanGoalUseCase
 from app.use_cases.chat.add_plan_place import AddPlanPlaceUseCase
 from app.use_cases.chat.generate_plan import GeneratePlanUseCase
+from app.use_cases.chat.update_plan import UpdatePlanUseCase
 from app.views.chats.get_chats import GetChatsView
 from app.views.chats.get_exercises import GetExercisesView
 from app.views.chats.get_factors import GetFactorsView
@@ -55,6 +61,15 @@ async def add_chat(
 ) -> ApiResponse[AddChatResponse]:
     result = await chat_add_use_case(cmd=cmd)
     return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
+
+
+@router.delete("/{chatId}", description="Удалить чат", status_code=204)
+@inject
+async def delete_chat(
+    chat_id: UUID = Path(description="Идентификатор чата", alias="chatId"),
+    use_case: DeleteChatUseCase = Depends(Provide[WebAppContainer.chat_delete_chat_use_case]),
+) -> ApiResponse[DeleteChatResponse]:
+    await use_case(chat_id=chat_id)
 
 
 @router.get("/", description="Получить чаты")
@@ -192,4 +207,14 @@ async def generate_plan(
     use_case: GeneratePlanUseCase = Depends(Provide[WebAppContainer.chat_generate_plan_use_case]),
 ) -> ApiResponse[GeneratePlanResponse]:
     result = await use_case(cmd=GeneratePlanCommand(plan_id=plan_id))
+    return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
+
+
+@router.put("/plans", description="Обновить описание плана", status_code=200)
+@inject
+async def update_plan(
+    cmd: UpdatePlanCommand,
+    use_case: UpdatePlanUseCase = Depends(Provide[WebAppContainer.chat_update_plan_use_case]),
+) -> ApiResponse[UpdatePlanResponse]:
+    result = await use_case(cmd=cmd)
     return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")

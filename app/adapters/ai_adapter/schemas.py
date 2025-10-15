@@ -33,3 +33,12 @@ class AIAGenAnswerResult(BaseModel):
     answer: str
     completion_tokens: int = 0
     prompt_tokens: int = 0
+
+
+class AIAUpdatePlanCommand(BaseModel):
+    plan: str
+    comment: str
+
+
+class AIAUpdatePlanResponse(BaseModel):
+    description: str

@@ -14,14 +14,15 @@ class GetExercisesView:
             stmt = select(
                 exercise_table.c.id,
                 exercise_table.c.name,
-                exercise_table.c.type
+                exercise_table.c.type,
+                exercise_table.c.description,
             ).limit(limit).offset(offset)
 
             exercises = (await self._uow.session.execute(stmt)).all()
 
             return GetExercisesResponse(
                 exercises=[
-                    ExerciseData(id=exercise.id, name=exercise.name, type=exercise.type)
+                    ExerciseData(id=exercise.id, name=exercise.name, type=exercise.type, description=exercise.description)
                     for exercise in exercises
                 ]
             )

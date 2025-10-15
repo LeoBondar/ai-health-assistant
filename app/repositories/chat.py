@@ -15,6 +15,9 @@ class IChatRepository(Protocol):
     async def save(self, chat: Chat) -> None:
         pass
 
+    async def delete(self, chat: Chat) -> None:
+        pass
+
 
 class ChatRepository(IChatRepository):
     def __init__(self, session: AsyncSession) -> None:
@@ -33,3 +36,6 @@ class ChatRepository(IChatRepository):
 
     async def save(self, chat: Chat) -> None:
         self.session.add(chat)
+
+    async def delete(self, chat: Chat) -> None:
+        await  self.session.delete(chat)

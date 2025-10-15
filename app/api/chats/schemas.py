@@ -16,6 +16,10 @@ class AddChatResponse(ApiCamelModel):
     id: UUID = Field(description="Идентификатор чата")
 
 
+class DeleteChatResponse(ApiCamelModel):
+    ...
+
+
 class ChatData(ApiCamelModel):
     id: UUID = Field(description="Идентификатор чата")
     name: str = Field(description="Название чата")
@@ -62,6 +66,7 @@ class ExerciseData(ApiCamelModel):
     id: UUID = Field(description="Идентификатор упражнения")
     name: str = Field(description="Название упражнения")
     type: str = Field(description="Тип упражнения")
+    description: str = Field(description="Описание упражнения")
 
 
 class GetExercisesResponse(ApiCamelModel):
@@ -132,4 +137,13 @@ class GeneratePlanCommand(ApiCamelModel):
 
 
 class GeneratePlanResponse(ApiCamelModel):
+    description: str = Field(description="Сгенерированное описание плана")
+
+
+class UpdatePlanCommand(ApiCamelModel):
+    plan_id: UUID = Field(description="Идентификатор плана")
+    comment: str = Field(description="Комментарий к плану", min_length=1, max_length=300)
+
+
+class UpdatePlanResponse(ApiCamelModel):
     description: str = Field(description="Сгенерированное описание плана")

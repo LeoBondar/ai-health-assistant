@@ -109,6 +109,7 @@ class Exercise:
     id: UUID
     name: str
     type: str
+    description: str
 
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, self.__class__):

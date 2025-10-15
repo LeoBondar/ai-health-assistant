@@ -14,6 +14,7 @@ class ErrorCode(IntEnum):
     RISK_FACTOR_NOT_FOUND = 3003
     EXERCISE_NOT_FOUND = 3004
     USER_GOAL_NOT_FOUND = 3005
+    PLAN_DESCRIPTION_EMPTY = 3006
 
 
 class ApiError(BaseAppException):
@@ -73,3 +74,9 @@ class UserGoalNotFoundApiError(ApiError):
     status_code = 404
     error_code = ErrorCode.USER_GOAL_NOT_FOUND
     message = "User goal not found"
+
+
+class PlanDescriptionEmptyApiError(ApiError):
+    status_code = 400
+    error_code = ErrorCode.PLAN_DESCRIPTION_EMPTY
+    message = "Plan description is empty. Generate plan first before updating"

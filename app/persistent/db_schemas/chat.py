@@ -144,6 +144,7 @@ exercise_table = Table(
     Column("id", UUID(as_uuid=True), primary_key=True),
     Column("name", String(255), nullable=False),
     Column("type", String(255), nullable=False),
+    Column("description", Text, nullable=True), 
     Column(
         "created_at",
         DateTime(timezone=True),
