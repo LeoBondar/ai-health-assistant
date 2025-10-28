@@ -8,3 +8,8 @@ class AIServiceEnum(str, Enum):
 class MessageType(str, Enum):
     USER = "USER"
     ASSISTANT = "ASSISTANT"
+
+
+class ExerciseType(str, Enum):
+    SINGLE = "SINGLE"
+    GROUP = "GROUP"

@@ -19,7 +19,7 @@ from app.dto.chat import (
     CreatePlanDTO,
     CreateUserGoalDTO,
 )
-from app.enums.chats import MessageType
+from app.enums.chats import MessageType, ExerciseType
 from app.utils.datetime import get_now_w_tz
 
 
@@ -108,7 +108,6 @@ class Place:
 class Exercise:
     id: UUID
     name: str
-    type: str
     description: str
 
     def __eq__(self, other: Any) -> bool:
@@ -130,6 +129,7 @@ class Plan:
     user_goal: UserGoal | None = None
     place: Place | None = None
     exercise: Exercise | None = None
+    exercise_type: ExerciseType | None = None
     description: str | None = None
 
     def __eq__(self, other: Any) -> bool:
@@ -143,6 +143,9 @@ class Plan:
 
     def add_risk_factor(self, risk_factor: RiskFactor) -> None:
         self.risk_factor = risk_factor
+
+    def set_exercise_type(self, exercise_type: ExerciseType) -> None:
+        self.exercise_type = exercise_type
 
     def add_disease(self, dto: AddDiseaseDTO) -> None:
         self.disease = Disease.create(dto=CreateDiseaseDTO(name=dto.name))

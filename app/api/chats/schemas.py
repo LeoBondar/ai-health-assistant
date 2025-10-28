@@ -2,7 +2,7 @@ from uuid import UUID
 
 from pydantic import Field
 
-from app.enums.chats import MessageType
+from app.enums.chats import MessageType, ExerciseType
 from app.utils.model import ApiCamelModel
 
 
@@ -85,6 +85,7 @@ class GetPlanInfoResponse(ApiCamelModel):
     user_goal: UserGoalData | None = Field(None, description="Цель пользователя")
     place: PlaceData | None = Field(None, description="Место")
     exercise: ExerciseData | None = Field(None, description="Упражнение")
+    exercise_type: str | None = Field(None, description="Тип упражнения")
 
 
 class AddPlanPlaceCommand(ApiCamelModel):
@@ -147,3 +148,12 @@ class UpdatePlanCommand(ApiCamelModel):
 
 class UpdatePlanResponse(ApiCamelModel):
     description: str = Field(description="Сгенерированное описание плана")
+
+
+class SetPlanExerciseTypeCommand(ApiCamelModel):
+    plan_id: UUID = Field(description="Идентификатор плана")
+    exercise_type: ExerciseType = Field(description="Тип упражнения")
+
+
+class SetPlanExerciseTypeResponse(ApiCamelModel):
+    pass

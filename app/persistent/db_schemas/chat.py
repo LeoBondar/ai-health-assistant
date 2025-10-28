@@ -143,7 +143,6 @@ exercise_table = Table(
     mapper_registry.metadata,
     Column("id", UUID(as_uuid=True), primary_key=True),
     Column("name", String(255), nullable=False),
-    Column("type", String(255), nullable=False),
     Column("description", Text, nullable=True), 
     Column(
         "created_at",
@@ -195,6 +194,7 @@ plan_table = Table(
         ForeignKey(f"{CHATS_SCHEMA}.exercise.id"),
         nullable=True,
     ),
+    Column("type", String(255), nullable=True),
     Column("description", Text, nullable=True),
     Column(
         "created_at",

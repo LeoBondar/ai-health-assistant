@@ -27,6 +27,8 @@ from app.api.chats.schemas import (
     GetPlanInfoResponse,
     GetRiskFactorsResponse,
     GetUserGoalsResponse,
+    SetPlanExerciseTypeCommand,
+    SetPlanExerciseTypeResponse,
     UpdatePlanCommand,
     UpdatePlanResponse,
     DeleteChatResponse
@@ -43,6 +45,7 @@ from app.use_cases.chat.add_plan_goal import AddPlanGoalUseCase
 from app.use_cases.chat.add_plan_place import AddPlanPlaceUseCase
 from app.use_cases.chat.generate_plan import GeneratePlanUseCase
 from app.use_cases.chat.update_plan import UpdatePlanUseCase
+from app.use_cases.chat.set_plan_exercise_type import SetPlanExerciseTypeUseCase
 from app.views.chats.get_chats import GetChatsView
 from app.views.chats.get_exercises import GetExercisesView
 from app.views.chats.get_factors import GetFactorsView
@@ -216,5 +219,15 @@ async def update_plan(
     cmd: UpdatePlanCommand,
     use_case: UpdatePlanUseCase = Depends(Provide[WebAppContainer.chat_update_plan_use_case]),
 ) -> ApiResponse[UpdatePlanResponse]:
+    result = await use_case(cmd=cmd)
+    return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
+
+
+@router.post("/plans/{planId}/exercise-type", description="Установить тип упражнения для плана", status_code=201)
+@inject
+async def set_plan_exercise_type(
+    cmd: SetPlanExerciseTypeCommand,
+    use_case: SetPlanExerciseTypeUseCase = Depends(Provide[WebAppContainer.chat_set_plan_exercise_type_use_case]),
+) -> ApiResponse[SetPlanExerciseTypeResponse]:
     result = await use_case(cmd=cmd)
     return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
