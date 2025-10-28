@@ -194,7 +194,7 @@ plan_table = Table(
         ForeignKey(f"{CHATS_SCHEMA}.exercise.id"),
         nullable=True,
     ),
-    Column("type", String(255), nullable=True),
+    Column("exercise_type", String(255), nullable=True),
     Column("description", Text, nullable=True),
     Column(
         "created_at",

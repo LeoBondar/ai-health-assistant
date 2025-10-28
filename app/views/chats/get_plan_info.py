@@ -42,8 +42,7 @@ class GetPlanInfoView:
                     place_table.c.name.label("place_name"),
                     exercise_table.c.id.label("exercise_id"),
                     exercise_table.c.name.label("exercise_name"),
-                    exercise_table.c.type.label("exercise_type"),
-                plan_table.c.exercise_type.label("plan_exercise_type"),
+                    plan_table.c.exercise_type.label("plan_exercise_type"),
                 )
                 .select_from(
                     plan_table.outerjoin(risk_factor_table, plan_table.c.risk_factor_id == risk_factor_table.c.id)
