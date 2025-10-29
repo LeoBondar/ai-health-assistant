@@ -65,7 +65,6 @@ class GetPlacesResponse(ApiCamelModel):
 class ExerciseData(ApiCamelModel):
     id: UUID = Field(description="Идентификатор упражнения")
     name: str = Field(description="Название упражнения")
-    type: str | None= Field(None, description="Тип упражнения")
     description: str | None = Field(None, description="Описание упражнения")
 
 
