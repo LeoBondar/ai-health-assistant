@@ -29,7 +29,7 @@ class GeneratePlanUseCase:
             disease = plan.disease.name if plan.disease else ""
             user_goal = plan.user_goal.name if plan.user_goal else ""
             place = plan.place.name if plan.place else ""
-            exercise_info = f"{plan.exercise.name} ({plan.exercise.type})" if plan.exercise else ""
+            exercise_info = f"{plan.exercise.name}" if plan.exercise else ""
 
             ai_adapter = self._ai_manager.get_ai_adapter(service=AIServiceEnum.OPENAI)
             

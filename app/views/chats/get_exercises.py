@@ -14,7 +14,6 @@ class GetExercisesView:
             stmt = select(
                 exercise_table.c.id,
                 exercise_table.c.name,
-                exercise_table.c.type,
                 exercise_table.c.description,
             ).limit(limit).offset(offset)
 
@@ -22,7 +21,7 @@ class GetExercisesView:
 
             return GetExercisesResponse(
                 exercises=[
-                    ExerciseData(id=exercise.id, name=exercise.name, type=exercise.type, description=exercise.description)
+                    ExerciseData(id=exercise.id, name=exercise.name, description=exercise.description)
                     for exercise in exercises
                 ]
             )
