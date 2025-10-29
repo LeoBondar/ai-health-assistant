@@ -113,6 +113,7 @@ class OpenAIAdapter(IAIAdapter, BaseAIAdapter):
                         • <i>Интенсивность:</i> низкая-средняя
                         
                         Structure the plan clearly with HTML formatting that Telegram can display properly.
+                        Please write recommendations in English.
                         """,
             }
         ]
@@ -153,6 +154,7 @@ class OpenAIAdapter(IAIAdapter, BaseAIAdapter):
                         • <i>Интенсивность:</i> низкая-средняя
                         
                         Structure the plan clearly with HTML formatting that Telegram can display properly.
+                        Please write recommendations in English.
                         """,
             }
         ]
