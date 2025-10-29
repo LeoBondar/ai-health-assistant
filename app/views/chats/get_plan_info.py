@@ -42,6 +42,7 @@ class GetPlanInfoView:
                     place_table.c.name.label("place_name"),
                     exercise_table.c.id.label("exercise_id"),
                     exercise_table.c.name.label("exercise_name"),
+                    exercise_table.c.description.label("exercise_description"),
                     plan_table.c.exercise_type.label("plan_exercise_type"),
                 )
                 .select_from(
@@ -78,7 +79,7 @@ class GetPlanInfoView:
             exercise = None
             if plan_result.exercise_id:
                 exercise = ExerciseData(
-                    id=plan_result.exercise_id, name=plan_result.exercise_name, type=plan_result.plan_exercise_type
+                    id=plan_result.exercise_id, name=plan_result.exercise_name, type=plan_result.plan_exercise_type, description=plan_result.exercise_description
                 )
 
             return GetPlanInfoResponse(
