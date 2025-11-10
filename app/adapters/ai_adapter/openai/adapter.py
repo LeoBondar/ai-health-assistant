@@ -91,7 +91,7 @@ class OpenAIAdapter(IAIAdapter, BaseAIAdapter):
                         1) Risk factor: {command.risk_factor}
                         2) Disease: {command.disease}
                         3) Goal: {command.user_goal}
-                        4) Place: {command.place}
+                        4) Types of physical activities fit best into your lifestyle: {command.place}
                         5) Exercise: {command.exercise}
                         
                         Based on this, I must create a future work plan. I should specify when, how much, and with what intensity a person should work to achieve their goals.
