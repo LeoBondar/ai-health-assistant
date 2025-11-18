@@ -1,9 +1,10 @@
 from uuid import UUID
 
-from app.repositories.uow import UnitOfWork
-from app.repositories.exception import RepositoryNotFoundException
-from app.api.errors.api_error import ChatNotFoundApiError
 from app.api.chats.schemas import DeleteChatResponse
+from app.api.errors.api_error import ChatNotFoundApiError
+from app.repositories.exception import RepositoryNotFoundException
+from app.repositories.uow import UnitOfWork
+
 
 class DeleteChatUseCase:
     def __init__(self, uow: UnitOfWork) -> None:
@@ -15,7 +16,7 @@ class DeleteChatUseCase:
                 await self._uow.chat_repository.get(chat_id)
             except RepositoryNotFoundException:
                 raise ChatNotFoundApiError
-            
+
             await self._uow.chat_repository.delete(chat_id)
-        
+
         return DeleteChatResponse()

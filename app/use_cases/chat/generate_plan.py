@@ -32,7 +32,7 @@ class GeneratePlanUseCase:
             exercise_info = f"{plan.exercise.name}" if plan.exercise else ""
 
             ai_adapter = self._ai_manager.get_ai_adapter(service=AIServiceEnum.OPENAI)
-            
+
             gen_plan_result = await ai_adapter.gen_plan(
                 command=AIAGenPlanCommand(
                     risk_factor=risk_factor,

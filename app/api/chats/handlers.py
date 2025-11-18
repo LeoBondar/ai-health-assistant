@@ -1,6 +1,4 @@
 from uuid import UUID
-from app.use_cases.chat.delete_chat import DeleteChatUseCase
-from uuid import UUID
 
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Body, Depends, Form, Path, Query
@@ -19,6 +17,7 @@ from app.api.chats.schemas import (
     AddPlanGoalResponse,
     AddPlanPlaceCommand,
     AddPlanPlaceResponse,
+    DeleteChatResponse,
     GeneratePlanCommand,
     GeneratePlanResponse,
     GetChatsResponse,
@@ -31,7 +30,6 @@ from app.api.chats.schemas import (
     SetPlanExerciseTypeResponse,
     UpdatePlanCommand,
     UpdatePlanResponse,
-    DeleteChatResponse
 )
 from app.api.errors.api_error import ErrorCode
 from app.api.models.base import ApiResponse
@@ -43,9 +41,10 @@ from app.use_cases.chat.add_plan_exercise import AddPlanExerciseUseCase
 from app.use_cases.chat.add_plan_factor import AddPlanFactorUseCase
 from app.use_cases.chat.add_plan_goal import AddPlanGoalUseCase
 from app.use_cases.chat.add_plan_place import AddPlanPlaceUseCase
+from app.use_cases.chat.delete_chat import DeleteChatUseCase
 from app.use_cases.chat.generate_plan import GeneratePlanUseCase
-from app.use_cases.chat.update_plan import UpdatePlanUseCase
 from app.use_cases.chat.set_plan_exercise_type import SetPlanExerciseTypeUseCase
+from app.use_cases.chat.update_plan import UpdatePlanUseCase
 from app.views.chats.get_chats import GetChatsView
 from app.views.chats.get_exercises import GetExercisesView
 from app.views.chats.get_factors import GetFactorsView
@@ -126,9 +125,10 @@ async def get_places(
 async def get_exercises(
     limit: int = Query(10, description="Лимит"),
     offset: int = Query(0, description="Оффсет"),
+    place_id: UUID | None = Query(None, alias="placeId"),
     view: GetExercisesView = Depends(Provide[WebAppContainer.chat_get_exercises_view]),
 ) -> ApiResponse[GetExercisesResponse]:
-    result = await view(limit=limit, offset=offset)
+    result = await view(limit=limit, offset=offset, place_id=place_id)
     return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
 
 

@@ -52,6 +52,7 @@ class CreatePlaceDTO:
 class CreateExerciseDTO:
     name: str
     type: str
+    place_id: UUID
 
 
 @dataclass

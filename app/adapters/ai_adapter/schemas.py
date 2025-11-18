@@ -15,7 +15,7 @@ class AIAMessageModel(BaseModel):
 class AIAGenTextCommand(BaseModel):
     messages: list[AIAMessageModel]
     use_context: bool
-    
+
 
 class AIAGenPlanCommand(BaseModel):
     risk_factor: str

@@ -2,9 +2,9 @@ from app.adapters.ai_adapter.base import BaseAIAdapter
 from app.adapters.ai_adapter.interface import IAIAdapter
 from app.adapters.ai_adapter.schemas import (
     AIAGenAnswerResult,
-    AIAGenTextCommand, 
-    AIAGenPlanResponse, 
     AIAGenPlanCommand,
+    AIAGenPlanResponse,
+    AIAGenTextCommand,
     AIAUpdatePlanCommand,
     AIAUpdatePlanResponse,
 )
@@ -78,7 +78,6 @@ class OpenAIAdapter(IAIAdapter, BaseAIAdapter):
             completion_tokens=response.usage.completion_tokens,
         )
 
-
     async def gen_plan(self, command: AIAGenPlanCommand) -> AIAGenPlanResponse:
         messages = [
             {
@@ -122,7 +121,7 @@ class OpenAIAdapter(IAIAdapter, BaseAIAdapter):
         return AIAGenPlanResponse(
             description=response.choices[0].message.content,
         )
-    
+
     async def update_plan(self, command: AIAUpdatePlanCommand) -> AIAUpdatePlanResponse:
         messages = [
             {

@@ -11,16 +11,8 @@ class GetUserGoalsView:
 
     async def __call__(self, limit: int, offset: int) -> GetUserGoalsResponse:
         async with self._uow.begin():
-            stmt = select(
-                user_goal_table.c.id,
-                user_goal_table.c.name
-            ).limit(limit).offset(offset)
+            stmt = select(user_goal_table.c.id, user_goal_table.c.name).limit(limit).offset(offset)
 
             goals = (await self._uow.session.execute(stmt)).all()
 
-            return GetUserGoalsResponse(
-                goals=[
-                    UserGoalData(id=goal.id, name=goal.name)
-                    for goal in goals
-                ]
-            )
+            return GetUserGoalsResponse(goals=[UserGoalData(id=goal.id, name=goal.name) for goal in goals])

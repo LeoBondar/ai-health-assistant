@@ -24,11 +24,7 @@ def init_mappers() -> None:
                 back_populates="chat",
                 cascade="all, delete-orphan",
             ),
-            "plan": relationship(
-                "Plan",
-                uselist=False,
-                backref="chat"
-            ),
+            "plan": relationship("Plan", uselist=False, backref="chat"),
         },
     )
 
@@ -72,10 +68,16 @@ def init_mappers() -> None:
         Plan,
         plan_table,
         properties={
-            "risk_factor": relationship("RiskFactor", foreign_keys=[plan_table.c.risk_factor_id], uselist=False, lazy="selectin"),
+            "risk_factor": relationship(
+                "RiskFactor", foreign_keys=[plan_table.c.risk_factor_id], uselist=False, lazy="selectin"
+            ),
             "disease": relationship("Disease", foreign_keys=[plan_table.c.disease_id], uselist=False, lazy="selectin"),
-            "user_goal": relationship("UserGoal", foreign_keys=[plan_table.c.user_goal_id], uselist=False, lazy="selectin"),
+            "user_goal": relationship(
+                "UserGoal", foreign_keys=[plan_table.c.user_goal_id], uselist=False, lazy="selectin"
+            ),
             "place": relationship("Place", foreign_keys=[plan_table.c.place_id], uselist=False, lazy="selectin"),
-            "exercise": relationship("Exercise", foreign_keys=[plan_table.c.exercise_id], uselist=False, lazy="selectin"),
+            "exercise": relationship(
+                "Exercise", foreign_keys=[plan_table.c.exercise_id], uselist=False, lazy="selectin"
+            ),
         },
     )

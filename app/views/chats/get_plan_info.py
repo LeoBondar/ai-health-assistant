@@ -79,7 +79,9 @@ class GetPlanInfoView:
             exercise = None
             if plan_result.exercise_id:
                 exercise = ExerciseData(
-                    id=plan_result.exercise_id, name=plan_result.exercise_name, description=plan_result.exercise_description
+                    id=plan_result.exercise_id,
+                    name=plan_result.exercise_name,
+                    description=plan_result.exercise_description,
                 )
 
             return GetPlanInfoResponse(

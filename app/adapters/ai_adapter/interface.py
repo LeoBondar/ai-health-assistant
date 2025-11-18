@@ -1,6 +1,13 @@
 from typing import Protocol
 
-from app.adapters.ai_adapter.schemas import AIAGenAnswerResult, AIAGenTextCommand, AIAGenPlanCommand, AIAGenPlanResponse, AIAUpdatePlanCommand, AIAUpdatePlanResponse
+from app.adapters.ai_adapter.schemas import (
+    AIAGenAnswerResult,
+    AIAGenPlanCommand,
+    AIAGenPlanResponse,
+    AIAGenTextCommand,
+    AIAUpdatePlanCommand,
+    AIAUpdatePlanResponse,
+)
 
 
 class IAIAdapter(Protocol):

@@ -38,4 +38,4 @@ class ChatRepository(IChatRepository):
         self.session.add(chat)
 
     async def delete(self, chat: Chat) -> None:
-        await  self.session.delete(chat)
+        await self.session.delete(chat)

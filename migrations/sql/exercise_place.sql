@@ -1,0 +1,2 @@
+ALTER TABLE IF EXISTS chats.exercise
+    ADD COLUMN IF NOT EXISTS place_id UUID REFERENCES chats.place (id) NOT NULL;

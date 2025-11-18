@@ -2,7 +2,7 @@ from uuid import UUID
 
 from pydantic import Field
 
-from app.enums.chats import MessageType, ExerciseType
+from app.enums.chats import ExerciseType, MessageType
 from app.utils.model import ApiCamelModel
 
 
@@ -34,6 +34,7 @@ class GetChatsResponse(ApiCamelModel):
 class RiskFactorData(ApiCamelModel):
     id: UUID = Field(description="Идентификатор фактора риска")
     factor: str = Field(description="Название фактора риска")
+
 
 class GetRiskFactorsResponse(ApiCamelModel):
     factors: list[RiskFactorData] = Field(description="Факторы риска")

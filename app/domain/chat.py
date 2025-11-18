@@ -19,7 +19,7 @@ from app.dto.chat import (
     CreatePlanDTO,
     CreateUserGoalDTO,
 )
-from app.enums.chats import MessageType, ExerciseType
+from app.enums.chats import ExerciseType, MessageType
 from app.utils.datetime import get_now_w_tz
 
 
@@ -107,6 +107,7 @@ class Place:
 @dataclass
 class Exercise:
     id: UUID
+    place_id: UUID
     name: str
     description: str
 
@@ -117,7 +118,7 @@ class Exercise:
 
     @classmethod
     def create(cls, dto: CreateExerciseDTO) -> "Exercise":
-        return cls(id=uuid4(), name=dto.name, type=dto.type)
+        return cls(id=uuid4(), name=dto.name, type=dto.type, place_id=dto.place_id)
 
 
 @dataclass

@@ -13,10 +13,10 @@ from app.use_cases.chat.add_plan_exercise import AddPlanExerciseUseCase
 from app.use_cases.chat.add_plan_factor import AddPlanFactorUseCase
 from app.use_cases.chat.add_plan_goal import AddPlanGoalUseCase
 from app.use_cases.chat.add_plan_place import AddPlanPlaceUseCase
-from app.use_cases.chat.generate_plan import GeneratePlanUseCase
-from app.use_cases.chat.update_plan import UpdatePlanUseCase
-from app.use_cases.chat.set_plan_exercise_type import SetPlanExerciseTypeUseCase
 from app.use_cases.chat.delete_chat import DeleteChatUseCase
+from app.use_cases.chat.generate_plan import GeneratePlanUseCase
+from app.use_cases.chat.set_plan_exercise_type import SetPlanExerciseTypeUseCase
+from app.use_cases.chat.update_plan import UpdatePlanUseCase
 from app.views.chats.get_chats import GetChatsView
 from app.views.chats.get_exercises import GetExercisesView
 from app.views.chats.get_factors import GetFactorsView
