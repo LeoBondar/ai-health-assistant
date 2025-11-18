@@ -65,7 +65,7 @@ async def add_chat(
     return ApiResponse(result=result, error_code=ErrorCode.SUCCESS, message="Success")
 
 
-@router.delete("/{chatId}", description="Удалить чат", status_code=204)
+@router.delete("/{chatId}", description="Удалить чат", status_code=200)
 @inject
 async def delete_chat(
     chat_id: UUID = Path(description="Идентификатор чата", alias="chatId"),
