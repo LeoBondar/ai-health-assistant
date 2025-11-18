@@ -24,7 +24,6 @@ class UpdatePlanUseCase:
             except RepositoryNotFoundException:
                 raise PlanNotFoundApiError
 
-            # Проверяем, что у плана есть описание для обновления
             if not plan.description or plan.description.strip() == "":
                 raise PlanDescriptionEmptyApiError
 
