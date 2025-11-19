@@ -1,5 +1,6 @@
 from app.api.chats.schemas import AddPlanExerciseCommand, AddPlanExerciseResponse
-from app.api.errors.api_error import ExerciseNotFoundApiError, PlanNotFoundApiError
+from app.api.errors.api_error import ExerciseNotFoundApiError, ExercisePlaceMismatchApiError, PlanNotFoundApiError
+from app.domain.exception import ExercisePlaceMismatchException
 from app.repositories.exception import RepositoryNotFoundException
 from app.repositories.uow import UnitOfWork
 
@@ -21,7 +22,11 @@ class AddPlanExerciseUseCase:
             except RepositoryNotFoundException:
                 raise ExerciseNotFoundApiError
 
-            plan.add_exercise(exercise)
+            try:
+                plan.add_exercise(exercise)
+            except ExercisePlaceMismatchException as e:
+                raise ExercisePlaceMismatchApiError from e
+
             await self._uow.plan_repository.save(plan)
 
         return AddPlanExerciseResponse()

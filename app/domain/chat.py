@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Any
 from uuid import UUID, uuid4
 
+from app.domain.exception import ExercisePlaceMismatchException
 from app.dto.chat import (
     AddDiseaseDTO,
     AddExerciseDTO,
@@ -158,6 +159,8 @@ class Plan:
         self.place = place
 
     def add_exercise(self, exercise: Exercise) -> None:
+        if exercise.place_id != self.place.id:
+            raise ExercisePlaceMismatchException
         self.exercise = exercise
 
 

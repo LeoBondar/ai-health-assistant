@@ -80,3 +80,9 @@ class PlanDescriptionEmptyApiError(ApiError):
     status_code = 400
     error_code = ErrorCode.PLAN_DESCRIPTION_EMPTY
     message = "Plan description is empty. Generate plan first before updating"
+
+
+class ExercisePlaceMismatchApiError(ApiError):
+    status_code = 400
+    error_code = ErrorCode.EXERCISE_NOT_FOUND
+    message = "Exercise place does not match the plan place."
