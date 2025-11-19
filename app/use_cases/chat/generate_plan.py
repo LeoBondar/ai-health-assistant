@@ -3,7 +3,7 @@ from uuid import UUID
 from app.adapters.ai_adapter.adapter_manager import IAIManager
 from app.adapters.ai_adapter.schemas import AIAGenPlanCommand, AIAMessageModel
 from app.api.chats.schemas import GeneratePlanCommand, GeneratePlanResponse
-from app.api.errors.api_error import ChatNotFoundApiError, PlanNotFoundApiError
+from app.api.errors.api_error import ChatNotFoundApiError, ExercisePlaceMismatchApiError, PlanNotFoundApiError
 from app.enums.chats import AIServiceEnum
 from app.repositories.exception import RepositoryNotFoundException
 from app.repositories.uow import UnitOfWork
@@ -30,6 +30,9 @@ class GeneratePlanUseCase:
             user_goal = plan.user_goal.name if plan.user_goal else ""
             place = plan.place.name if plan.place else ""
             exercise_info = f"{plan.exercise.name}" if plan.exercise else ""
+
+            if plan.exercise.place_id != plan.place.id:
+                raise ExercisePlaceMismatchApiError
 
             ai_adapter = self._ai_manager.get_ai_adapter(service=AIServiceEnum.OPENAI)
 

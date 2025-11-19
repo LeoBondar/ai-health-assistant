@@ -1,7 +1,7 @@
 from app.adapters.ai_adapter.adapter_manager import IAIManager
 from app.adapters.ai_adapter.schemas import AIAUpdatePlanCommand
 from app.api.chats.schemas import UpdatePlanCommand, UpdatePlanResponse
-from app.api.errors.api_error import PlanDescriptionEmptyApiError, PlanNotFoundApiError
+from app.api.errors.api_error import ExercisePlaceMismatchApiError, PlanDescriptionEmptyApiError, PlanNotFoundApiError
 from app.enums.chats import AIServiceEnum
 from app.repositories.exception import RepositoryNotFoundException
 from app.repositories.uow import UnitOfWork
@@ -26,6 +26,9 @@ class UpdatePlanUseCase:
 
             if not plan.description or plan.description.strip() == "":
                 raise PlanDescriptionEmptyApiError
+
+            if plan.exercise.place_id != plan.place.id:
+                raise ExercisePlaceMismatchApiError
 
             ai_adapter = self._ai_manager.get_ai_adapter(service=AIServiceEnum.OPENAI)
 
